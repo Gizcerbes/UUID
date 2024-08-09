@@ -6,7 +6,7 @@ import kotlinx.cinterop.toCValues
 import platform.Foundation.NSUUID
 
 
-actual class UUID(
+class IUUID(
     val uuid: NSUUID
 ) : AbstractUUID() {
 
@@ -14,19 +14,19 @@ actual class UUID(
     private val leastSigBits = pgetLeastSignificantBits()
     private val mostSigBits = pgetMostSignificantBits()
 
-    actual companion object : StaticUUID() {
+    companion object : StaticUUID() {
 
         override fun randomUUID(): AbstractUUID =
-            UUID(NSUUID.new()!!)
+            IUUID(NSUUID.new()!!)
 
 
         @OptIn(ExperimentalForeignApi::class)
         override fun nameUUIDFromBytes(byteArray: ByteArray): AbstractUUID =
-            UUID(NSUUID(byteArray.toUByteArray().toCValues().getPointer(MemScope())))
+            IUUID(NSUUID(byteArray.toUByteArray().toCValues().getPointer(MemScope())))
 
 
         override fun fromString(var0: String): AbstractUUID =
-            UUID(NSUUID(var0))
+            IUUID(NSUUID(var0))
 
 
     }
@@ -88,7 +88,7 @@ actual class UUID(
 
     override fun equals(other: Any?): Boolean {
         if (null != other && other == UUID::class) {
-            val var2: UUID = other as UUID
+            val var2: IUUID = other as IUUID
             return this.mostSigBits == var2.mostSigBits && this.leastSigBits == var2.leastSigBits
         } else {
             return false
@@ -108,5 +108,6 @@ actual class UUID(
         }
     }
 
-
 }
+
+actual val UUID: StaticUUID = IUUID

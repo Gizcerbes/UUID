@@ -3,18 +3,18 @@ package com.uogames.uuid
 
 typealias OUUID = java.util.UUID
 
-actual class UUID(
+class JUUID(
     val uuid: OUUID
 ) : AbstractUUID() {
 
-    actual companion object : StaticUUID() {
+    companion object : StaticUUID() {
 
-        override fun randomUUID(): AbstractUUID = UUID(OUUID.randomUUID())
+        override fun randomUUID(): AbstractUUID = JUUID(OUUID.randomUUID())
 
         override fun nameUUIDFromBytes(byteArray: ByteArray): AbstractUUID =
-            UUID(OUUID.nameUUIDFromBytes(byteArray))
+            JUUID(OUUID.nameUUIDFromBytes(byteArray))
 
-        override fun fromString(var0: String):AbstractUUID = UUID(OUUID.fromString(var0))
+        override fun fromString(var0: String):AbstractUUID = JUUID(OUUID.fromString(var0))
 
     }
 
@@ -38,6 +38,8 @@ actual class UUID(
 
     override fun equals(other: Any?): Boolean = uuid == other
 
-    override fun compareTo(other: AbstractUUID): Int = uuid.compareTo((other as UUID).uuid)
+    override fun compareTo(other: AbstractUUID): Int = uuid.compareTo((other as JUUID).uuid)
 
 }
+
+actual val UUID: StaticUUID = JUUID
