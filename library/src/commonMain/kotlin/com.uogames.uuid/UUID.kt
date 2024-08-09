@@ -1,12 +1,5 @@
 package com.uogames.uuid
 
-//@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-//expect class UUID : AbstractUUID{
-//
-//    companion object : StaticUUID
-//
-//}
-
 expect val UUID : StaticUUID
 
 abstract class AbstractUUID : Comparable<AbstractUUID> {
